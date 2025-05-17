@@ -16,8 +16,5 @@ Get it [here](https://github.com/EdgeIY/infiniteyield/wiki)
 ### Developer: Toon
 
 
-## Usage
-You can learn how to use all the features of this script in the wiki!
-
-## Contributing
-There is no specific rules on contributing (as of now) just open a pull request and if it checks out we will merge it!
+## NEW COMMAND ADDED BY YENNYLOL
+frontbang / unfrontbang - To bang someone but in front.
