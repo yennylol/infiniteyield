@@ -10537,22 +10537,27 @@ addcmd("frontbang", {"frontrape"}, function(args, speaker)
 		frontbangDied:Disconnect()
 		frontbangLoop:Disconnect()
 	end)
-	if args[1] then
-		local players = getPlayer(args[1], speaker)
-		for _, v in pairs(players) do
-			local frontbangplr = Players[v].Name
-			local frontbangOffet = CFrame.new(0, 0, 1.1)
-			frontbangLoop = RunService.Stepped:Connect(function()
-				pcall(function()
-					local otherRoot = getTorso(Players[frontbangplr].Character)
-					getRoot(speaker.Character).CFrame = otherRoot.CFrame * frontbangOffet
-				local targetPosition = otherRoot.Position
+if args[1] then
+	local players = getPlayer(args[1], speaker)
+	for _, v in pairs(players) do
+		local frontbangplr = Players[v].Name
+		local frontbangOffset = CFrame.new(0, 0, 1.1) -- Keep this as is
+		frontbangLoop = RunService.Stepped:Connect(function()
+			pcall(function()
+				local otherRoot = getTorso(Players[frontbangplr].Character)
 				local speakerRoot = getRoot(speaker.Character)
-				speakerRoot.CFrame = CFrame.new(speakerRoot.Position, Vector3.new(targetPosition.X, speakerRoot.Position.Y, targetPosition.Z))
-				end)
+
+				-- Set the position
+				speakerRoot.CFrame = otherRoot.CFrame * frontbangOffset
+
+				-- Rotate to face the target
+				local targetPosition = otherRoot.Position
+				local lookAtCFrame = CFrame.new(speakerRoot.Position, targetPosition)
+				speakerRoot.CFrame = speakerRoot.CFrame:Lerp(lookAtCFrame, 0.1) -- Smooth rotation
 			end)
-		end
+		end)
 	end
+    end
 end)
 addcmd("unfrontbang", {"unfrontrape"}, function(args, speaker)
 	if frontbangDied then
