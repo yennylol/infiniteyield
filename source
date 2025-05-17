@@ -10537,28 +10537,21 @@ addcmd("frontbang", {"frontrape"}, function(args, speaker)
 		frontbangDied:Disconnect()
 		frontbangLoop:Disconnect()
 	end)
-if args[1] then
-	local players = getPlayer(args[1], speaker)
-	for _, v in pairs(players) do
-		local frontbangplr = Players[v].Name
-		local frontbangOffset = CFrame.new(0, 0, 1.1) -- Keep this as is
-		frontbangLoop = RunService.Stepped:Connect(function()
-			pcall(function()
-				local otherRoot = getTorso(Players[frontbangplr].Character)
-				local speakerRoot = getRoot(speaker.Character)
-
-				-- Set the position
-				speakerRoot.CFrame = otherRoot.CFrame * frontbangOffset
-
-				-- Rotate to face the target
-				local targetPosition = otherRoot.Position
-				local lookAtCFrame = CFrame.new(speakerRoot.Position, targetPosition)
-				speakerRoot.CFrame = speakerRoot.CFrame:Lerp(lookAtCFrame, 0.1) -- Smooth rotation
+	if args[1] then
+		local players = getPlayer(args[1], speaker)
+		for _, v in pairs(players) do
+			local frontbangplr = Players[v].Name
+			local frontbangOffset = CFrame.new(0, 0, -1.1) * CFrame.Angles(0, math.pi, 0)
+			frontbangLoop = RunService.Stepped:Connect(function()
+				pcall(function()
+					local otherRoot = getTorso(Players[frontbangplr].Character)
+					getRoot(speaker.Character).CFrame = otherRoot.CFrame * frontbangOffset
+				end)
 			end)
-		end)
+		end
 	end
-    end
 end)
+
 addcmd("unfrontbang", {"unfrontrape"}, function(args, speaker)
 	if frontbangDied then
 		frontbangDied:Disconnect()
@@ -10567,7 +10560,6 @@ addcmd("unfrontbang", {"unfrontrape"}, function(args, speaker)
 		frontbangLoop:Disconnect()
 	end
 end)
-
 addcmd("unbang", {"unrape"}, function(args, speaker)
 	if bangDied then
 		bangDied:Disconnect()
