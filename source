@@ -10541,14 +10541,14 @@ addcmd("frontbang", {"frontrape"}, function(args, speaker)
 		local players = getPlayer(args[1], speaker)
 		for _, v in pairs(players) do
 			local frontbangplr = Players[v].Name
-			local frontbangOffet = CFrame.new(0, 0, -1.1)
+			local frontbangOffet = CFrame.new(0, 0, 1.1)
 			frontbangLoop = RunService.Stepped:Connect(function()
 				pcall(function()
 					local otherRoot = getTorso(Players[frontbangplr].Character)
 					getRoot(speaker.Character).CFrame = otherRoot.CFrame * frontbangOffet
 				local targetPosition = otherRoot.Position
 				local speakerRoot = getRoot(speaker.Character)
-				speakerRoot.CFrame = CFrame.new(speakerRoot.Position, Vector3.new(targetPosition.X, speakerRoot.Position.Y, targetPosition.Z)) * frontbangOffset
+				speakerRoot.CFrame = CFrame.new(speakerRoot.Position, Vector3.new(targetPosition.X, speakerRoot.Position.Y, targetPosition.Z))
 				end)
 			end)
 		end
